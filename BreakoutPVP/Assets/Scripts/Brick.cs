@@ -5,7 +5,7 @@ using UnityEngine;
 public class Brick : MonoBehaviour {
 
     [SerializeField] int currHP;
-    [SerializeField] bool isBreakable;
+    [SerializeField] public bool isBreakable;
     [SerializeField] Material mat;
  
     void Start() {
@@ -25,9 +25,10 @@ public class Brick : MonoBehaviour {
         */
     }
 
-    public void HitWall() {
+    public void HitWall() 
+    {
         if (!isBreakable) return;
-        
+
         currHP--;
 
         if (currHP <= 0) 
@@ -35,7 +36,11 @@ public class Brick : MonoBehaviour {
     }
     
     void test() {
-        Debug.Log(gameObject.name + " = " + currHP);
+
+        if(isBreakable != false)
+        {
+            Debug.Log(gameObject.name + " = " + currHP);
+        }
 
         switch (currHP) {
             case 0: break;

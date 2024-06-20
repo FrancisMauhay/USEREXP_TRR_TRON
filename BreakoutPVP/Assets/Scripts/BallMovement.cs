@@ -8,6 +8,7 @@ public class BallMovement : MonoBehaviour {
     Rigidbody2D rb;
     bool player2 = false;
 
+
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         Launch();
