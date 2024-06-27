@@ -8,28 +8,33 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager instance { get; private set; }
 
-    [SerializeField] int P1points = 0;
-    [SerializeField] int P2points = 0;
+    [SerializeField] public int P1points = 0;
+    [SerializeField] public int P2points = 0;
     [SerializeField] TextMeshProUGUI P1Score;
     [SerializeField] TextMeshProUGUI P2Score;
+    public BrickSpawner BrickHandler { get; set; }
 
-    void Awake() {
+    void Awake() 
+    {
         if (instance == null) {
             instance = this;
             DontDestroyOnLoad(gameObject);
+
+            BrickHandler = FindObjectOfType<BrickSpawner>();
         }
         else Destroy(gameObject);
     }
 
     void Start() 
     {
-
+        BrickHandler.SpawnBrick();
     }
 
     void Update() 
     {
         if (Input.GetKeyDown(KeyCode.Backspace)) // basic restart code
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+
         CheckPoints();
         printScore();
     }

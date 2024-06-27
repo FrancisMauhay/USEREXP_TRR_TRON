@@ -9,7 +9,8 @@ public class BallMovement : MonoBehaviour {
     bool player2 = false;
 
 
-    void Start() {
+    void Start()
+    {
         rb = GetComponent<Rigidbody2D>();
         Launch();
     }
@@ -25,8 +26,10 @@ public class BallMovement : MonoBehaviour {
         }
     }
     
-    void OnCollisionEnter2D (Collision2D collision) { // ball hits paddle
-        if (collision.gameObject.GetComponent<PlayerMovement>() != null) {
+    void OnCollisionEnter2D (Collision2D collision) 
+    { // ball hits paddle
+        if (collision.gameObject.GetComponent<PlayerMovement>() != null)
+        {
             Vector2 hitFactor = CalculateHitFactor(transform.position, collision.transform.position, collision.collider.bounds.size);
             Vector2 newDirection = new Vector2(hitFactor.x, hitFactor.y).normalized;
 
@@ -34,16 +37,26 @@ public class BallMovement : MonoBehaviour {
             moveSpeed++;
         }
 
-        if (collision.gameObject.GetComponent<Brick>() != null) { // ball hits wall
+        if (collision.gameObject.GetComponent<Brick>() != null) 
+        { // ball hits wall
             Vector2 hitFactor = CalculateHitFactor(transform.position, collision.transform.position, collision.collider.bounds.size);
             Vector2 newDirection = new Vector2(hitFactor.x, hitFactor.y).normalized;
 
             rb.velocity = newDirection * moveSpeed;
             collision.gameObject.GetComponent<Brick>().HitWall();
         }
+
+        if (collision.gameObject.GetComponent<Wall>() != null)
+        {
+            Vector2 hitFactor = CalculateHitFactor(transform.position, collision.transform.position, collision.collider.bounds.size);
+            Vector2 newDirection = new Vector2(rb.velocity.x, hitFactor.y).normalized;
+
+            rb.velocity = newDirection * moveSpeed;
+        }
     }
 
-    public Vector2 CalculateHitFactor(Vector2 ballPos, Vector2 paddlePos, Vector2 paddleSize) {
+    public Vector2 CalculateHitFactor(Vector2 ballPos, Vector2 paddlePos, Vector2 paddleSize)
+    {
         float x = (ballPos.x - paddlePos.x) / paddleSize.x;
         float y = (ballPos.y - paddlePos.y) / paddleSize.y;
 

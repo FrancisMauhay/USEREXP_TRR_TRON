@@ -5,14 +5,21 @@ using UnityEngine;
 public class Brick : MonoBehaviour {
 
     [SerializeField] int currHP;
-    [SerializeField] public bool isBreakable;
     [SerializeField] Material mat;
- 
-    void Start() {
-        if (isBreakable) {
+
+    private float x;
+
+    public BrickSpawner BrickHandler { get; set; }
+
+    void Awake()
+    {
+        BrickHandler = FindObjectOfType<BrickSpawner>();
+    }
+
+    void Start() 
+    {
             mat.color = Color.green;
             currHP = 3;
-        }
     }
 
     void Update() {
@@ -27,20 +34,15 @@ public class Brick : MonoBehaviour {
 
     public void HitWall() 
     {
-        if (!isBreakable) return;
-
         currHP--;
 
-        if (currHP <= 0) 
-            Destroy(gameObject);
+        if (currHP <= 0)
+        {
+            BrickHandler.BrickDestroyed(this.gameObject);
+        }
     }
     
     void test() {
-
-        if(isBreakable != false)
-        {
-            Debug.Log(gameObject.name + " = " + currHP);
-        }
 
         switch (currHP) {
             case 0: break;
