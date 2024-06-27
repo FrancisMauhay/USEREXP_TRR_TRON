@@ -577,6 +577,7 @@ GameObject:
   - component: {fileID: 686110967}
   - component: {fileID: 686110969}
   - component: {fileID: 686110970}
+  - component: {fileID: 686110971}
   m_Layer: 0
   m_Name: Top Wall
   m_TagString: Untagged
@@ -696,6 +697,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &686110971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 686110966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8db70787658eb74b9f609d4d18b62f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &873263505
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,6 +1272,7 @@ GameObject:
   - component: {fileID: 1406801659}
   - component: {fileID: 1406801661}
   - component: {fileID: 1406801662}
+  - component: {fileID: 1406801663}
   m_Layer: 0
   m_Name: Bottom Wall
   m_TagString: Untagged
@@ -1378,6 +1392,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1406801663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1406801658}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a8db70787658eb74b9f609d4d18b62f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1485091977
 GameObject:
   m_ObjectHideFlags: 0
@@ -1527,6 +1553,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BrickPrefab: {fileID: 580856901499032430, guid: 211be64e154a3b743a1732c7d5b423ff, type: 3}
+  rightBrickActive: 0
+  leftBrickActive: 0
 --- !u!1 &1919316144
 GameObject:
   m_ObjectHideFlags: 0
