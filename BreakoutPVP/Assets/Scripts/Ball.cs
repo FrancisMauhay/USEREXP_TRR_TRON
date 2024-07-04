@@ -16,6 +16,11 @@ public class Ball : MonoBehaviour {
         initMoveSpeed = moveSpeed;
     }
 
+    private void Update()
+    {
+        Debug.Log("Ball Velocity "+rb.velocity);
+    }
+
     void Launch() {
         if (rb != null) {
 
@@ -62,4 +67,7 @@ public class Ball : MonoBehaviour {
 
         return new Vector2(x, y);
     }
+
+    
+
 }

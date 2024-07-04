@@ -7,9 +7,13 @@ public class BallSpawner : MonoBehaviour {
     
     private int ballAmt = 0;
 
+    float defaultTimer = 10.0f;
+
     void Update() {
         if (ballAmt < 1)
             SpawnBall();
+
+       // ResetBall();
     }
 
     public void SpawnBall() {
@@ -23,4 +27,20 @@ public class BallSpawner : MonoBehaviour {
         Destroy(ballObj);
         ballAmt = 0;
     }
+
+/*    private void ResetBall()
+    {
+        GameObject ball = ballPrefab.GetComponent<GameObject>();
+        if (ball.GetComponent<Ball>().rb.velocity.x <= 0 &&
+            ball.GetComponent<Rigidbody>().velocity.y <= 0)
+        {
+            defaultTimer -= Time.deltaTime;
+            Debug.Log(defaultTimer);
+
+            if (defaultTimer <= 0)
+            {
+                DestroyBall(ball);
+            }
+        }
+    }*/
 }
