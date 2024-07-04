@@ -10,15 +10,21 @@ public class GameManager : MonoBehaviour {
     public BrickSpawner BrickHandler { get; set; }
 
     [SerializeField] int P1points = 0, P2points = 0;
+    private int ChanceDie;
+    private int PowerUpDie;
     [SerializeField] TextMeshProUGUI P1Score, P2Score;
 
-    void Awake()  {
+    void Awake()  
+    {
         if (instance == null) {
             instance = this;
             BrickHandler = FindObjectOfType<BrickSpawner>();
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
+
+        ChanceDie = Random.Range(1,6);
+        PowerUpDie = Random.Range(1,3);
     }
 
     void Start() {
@@ -51,5 +57,34 @@ public class GameManager : MonoBehaviour {
     public void PrintScore() {
         P1Score.text = P1points.ToString();
         P2Score.text = P2points.ToString();
+    }
+
+    public void PowerUpRoll() {
+        if(ChanceDie == 1)
+        {
+            Debug.Log("You get a Power Up");
+            if(PowerUpDie == 1)
+            {
+                Debug.Log("1");
+                //PowerUp1
+            }
+            else if(PowerUpDie == 2)
+            {
+                Debug.Log("2");
+                //PowerUp2
+            }
+            else if (PowerUpDie == 3)
+            {
+                Debug.Log("3");
+                // PowerUp3
+            }
+            ChanceDie = Random.Range(1,6);
+            PowerUpDie = Random.Range(1,3);
+        }
+        else
+        {
+            Debug.Log("No PowerUp");
+            ChanceDie = Random.Range(1, 6);
+        }
     }
 }
