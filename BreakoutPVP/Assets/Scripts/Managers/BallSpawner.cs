@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class BallSpawner : MonoBehaviour {
     [SerializeField] GameObject ballPrefab;
+    private GameObject ballInstance;
     
     private int ballAmt = 0;
 
-    float defaultTimer = 10.0f;
+    float defaultTimer = 4.0f;
 
     void Update() {
         if (ballAmt < 1)
             SpawnBall();
 
-       // ResetBall();
+       CheckBallVelocity();
     }
 
     public void SpawnBall() {
-        GameObject ball = Instantiate(ballPrefab) as GameObject;
-        ball.transform.position = new Vector2(0, 0);
+        ballInstance = Instantiate(ballPrefab) as GameObject;
+        ballInstance.transform.position = new Vector2(0, 0);
 
         ballAmt++;
     }
@@ -28,19 +29,21 @@ public class BallSpawner : MonoBehaviour {
         ballAmt = 0;
     }
 
-/*    private void ResetBall()
-    {
-        GameObject ball = ballPrefab.GetComponent<GameObject>();
-        if (ball.GetComponent<Ball>().rb.velocity.x <= 0 &&
-            ball.GetComponent<Rigidbody>().velocity.y <= 0)
+    public void CheckBallVelocity() { 
+        Ball ball = GetComponent<Ball>();
+        if(ball.rb.velocity.magnitude <= 0.1f)
         {
             defaultTimer -= Time.deltaTime;
-            Debug.Log(defaultTimer);
-
-            if (defaultTimer <= 0)
+            
+            if(defaultTimer <= 0)
             {
-                DestroyBall(ball);
+                ball.ResetBall();
+                defaultTimer = 4.0f;
             }
         }
-    }*/
+        else
+        {
+            defaultTimer = 4.0f;
+        }
+    }
 }

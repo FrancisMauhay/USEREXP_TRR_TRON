@@ -5,7 +5,7 @@ using UnityEngine;
 public class Ball : MonoBehaviour {
 
     [SerializeField] float moveSpeed;
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     float initMoveSpeed;
     bool player2 = false;
 
@@ -18,7 +18,7 @@ public class Ball : MonoBehaviour {
 
     private void Update()
     {
-        Debug.Log("Ball Velocity "+rb.velocity);
+        //Debug.Log("Ball Velocity "+rb.velocity);
     }
 
     void Launch() {
@@ -68,6 +68,8 @@ public class Ball : MonoBehaviour {
         return new Vector2(x, y);
     }
 
-    
-
+    public void ResetBall() { 
+        transform.position = Vector2.zero;
+        rb.velocity = Vector2.left;
+    }
 }
