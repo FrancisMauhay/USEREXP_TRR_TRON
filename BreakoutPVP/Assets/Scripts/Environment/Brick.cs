@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Brick : MonoBehaviour {
@@ -9,9 +8,8 @@ public class Brick : MonoBehaviour {
 
     public bool P2Brick = false;
 
-    private int damage = 1;
-    private bool ShieldActive = false;
-    private bool DoubleActive = false;
+    int damage = 1;
+    bool ShieldActive = false, DoubleActive = false;
 
     public BrickSpawner BrickHandler { get; set; }
 
@@ -20,12 +18,20 @@ public class Brick : MonoBehaviour {
     }
 
     void Start()  {
+        /* the player hitting the brick is their corresponding brick
+            - P1 (left) hits P1 wall (right)
+            - P2 (right) hits P2 wall (left)
+        */
+
+        if (P2Brick) gameObject.name = "Right Wall";
+        else gameObject.name = "Left Wall";
+
         currHP = 3;
         mat.color = Color.green;
     }
 
     void Update() {
-        test();
+        test(); // for small HP values
 
         /* actual color changer code (make sure the HP is set beforehand)
             if (currHP >= 10) mat.color = Color.green;
@@ -37,12 +43,9 @@ public class Brick : MonoBehaviour {
     public void HitWall() {
         currHP -= damage;
 
-        if (currHP <= 0) {
-            BrickHandler.BrickDestroyed(gameObject);
-        }
-        else {
-            GameManager.instance.AssignPowerUp(this);
-        }
+        if (currHP <= 0) BrickHandler.BrickDestroyed(gameObject); 
+        else  GameManager.instance.AssignPowerUp(this);
+        
         // Debug.LogWarning(gameObject.name + " has been hit");
     }
 
@@ -54,6 +57,8 @@ public class Brick : MonoBehaviour {
             case 3: mat.color = Color.green; break;
             default: break;
         }
+
+        Debug.LogWarning(name + "'s HP: " + currHP);
     }
 
     public void ActivateShield() { 
@@ -64,7 +69,6 @@ public class Brick : MonoBehaviour {
             StartCoroutine(ShieldDuration());
         }
     }
-
     public void ActivateDouble() {
         if (!DoubleActive) {
             DoubleActive = true;
@@ -73,14 +77,12 @@ public class Brick : MonoBehaviour {
             StartCoroutine(DoubleDuration());
         }
     }
-
     IEnumerator ShieldDuration() {
         yield return new WaitForSeconds(10);
         ShieldActive = false;
         damage = 1;
         Debug.Log("Shield Deactivated");
     }
-
     IEnumerator DoubleDuration() {
         yield return new WaitForSeconds(10);
         DoubleActive = false;

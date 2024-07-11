@@ -1,21 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Paddle : MonoBehaviour
-{
+public class Paddle : MonoBehaviour {
     PlayerInput playerInput;
     InputAction move;
     [SerializeField] float MovementSpeed;
     [SerializeField] bool Player1;
 
-    void Start()
-    {
+    void Start() {
         playerInput = GetComponent<PlayerInput>();
 
-        if (playerInput != null)
-        {
+        if (playerInput != null) {
 
             if (Player1 == true)
                 move = playerInput.actions.FindAction("Player 1");
@@ -25,13 +20,11 @@ public class Paddle : MonoBehaviour
         }
     }
 
-    void Update()
-    {
+    void Update() {
         PlayerMove();
     }
 
-    void PlayerMove()
-    {
+    void PlayerMove() {
         Vector2 direction = move.ReadValue<Vector2>();
         Vector2 movement = new Vector2(0, direction.y * MovementSpeed * Time.deltaTime);
 

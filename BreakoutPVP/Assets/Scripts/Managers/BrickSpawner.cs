@@ -21,8 +21,7 @@ public class BrickSpawner : MonoBehaviour {
     }
 
     public void SpawnBrick() {
-        if (!rightBrickActive) {
-            // Debug.Log("Right Brick is active");
+        if (!rightBrickActive) { // Debug.Log("Right Brick is active");
             rightBrickActive = true;
 
             rightBrick = Instantiate(BrickPrefab) as GameObject;
@@ -31,8 +30,7 @@ public class BrickSpawner : MonoBehaviour {
             rightBrick.GetComponent<Renderer>().material = mat2;
             // Debug.LogWarning("Spawned right brick");
         }
-        if (!leftBrickActive) {
-            // Debug.Log("Left Brick is Active");
+        if (!leftBrickActive) { // Debug.Log("Left Brick is Active");
             leftBrickActive = true;
 
             leftBrick = Instantiate(BrickPrefab) as GameObject;

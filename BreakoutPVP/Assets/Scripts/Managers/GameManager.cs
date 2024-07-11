@@ -34,20 +34,24 @@ public class GameManager : MonoBehaviour
     }
 
     void CheckPoints() {
-        if (P1points >= 3) Debug.Log("P1 WINS");
-        if (P2points >= 3) Debug.Log("P2 WINS");
+        if (P1points >= 3) {
+            Debug.Log("P1 WINS");
+            BrickHandler.SpawnBrick();
+        }
+        if (P2points >= 3) {
+            Debug.Log("P2 WINS");
+            BrickHandler.SpawnBrick();
+        }
     }
 
-    public void P1Scored() {
+        public void P1Scored() {
         P1points++;
         Debug.Log("P1 Score: " + P1points);
     }
-
     public void P2Scored() {
         P2points++;
         Debug.Log("P2 Score: " + P2points);
     }
-
     public void PrintScore() {
         P1Score.text = P1points.ToString();
         P2Score.text = P2points.ToString();
@@ -57,22 +61,14 @@ public class GameManager : MonoBehaviour
         int powerUpDie = Random.Range(1, 3); // 1 or 2
         PowerUpType powerUpType = (PowerUpType)powerUpDie;
 
-        if (brick != null)
-        {
-            switch (powerUpType)
-            {
-                case PowerUpType.Shield:
-                    brick.ActivateShield();
-                    break;
-                case PowerUpType.Double:
-                    brick.ActivateDouble();
-                    break;
+        if (brick != null) {
+            switch (powerUpType) {
+                case PowerUpType.Shield: brick.ActivateShield(); break;
+                case PowerUpType.Double: brick.ActivateDouble(); break;
+                default: break;
             }
         }
     }
 }
 
-public enum PowerUpType {
-    Shield = 1,
-    Double = 2
-}
+public enum PowerUpType { Shield = 1, Double = 2 }
