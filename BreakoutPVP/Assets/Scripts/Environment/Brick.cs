@@ -43,9 +43,14 @@ public class Brick : MonoBehaviour {
     public void HitWall() {
         currHP -= damage;
 
-        if (currHP <= 0) BrickHandler.BrickDestroyed(gameObject); 
-        else  GameManager.instance.AssignPowerUp(this);
-        
+        if (currHP <= 0) {
+            BrickHandler.BrickDestroyed(gameObject);
+            // SoundManager.Instance.Play();
+        }
+        else {
+            GameManager.Instance.AssignPowerUp(this);
+            // SoundManager.Instance.Play();
+        }
         // Debug.LogWarning(gameObject.name + " has been hit");
     }
 
@@ -67,6 +72,7 @@ public class Brick : MonoBehaviour {
             damage = 0;
             Debug.Log("Shield Activated");
             StartCoroutine(ShieldDuration());
+            // SoundManager.Instance.Play();
         }
     }
     public void ActivateDouble() {
@@ -75,6 +81,7 @@ public class Brick : MonoBehaviour {
             damage = 2;
             Debug.Log("Double Damage Activated");
             StartCoroutine(DoubleDuration());
+            // SoundManager.Instance.Play();
         }
     }
     IEnumerator ShieldDuration() {
@@ -82,11 +89,13 @@ public class Brick : MonoBehaviour {
         ShieldActive = false;
         damage = 1;
         Debug.Log("Shield Deactivated");
+        // SoundManager.Instance.Play();
     }
     IEnumerator DoubleDuration() {
         yield return new WaitForSeconds(10);
         DoubleActive = false;
         damage = 1;
         Debug.Log("Double Damage Over");
+        // SoundManager.Instance.Play();
     }
 }

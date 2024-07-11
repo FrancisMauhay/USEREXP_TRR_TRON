@@ -19,13 +19,13 @@ public class Goal : MonoBehaviour {
             if (player2 == true) {
                 BallHandler.DestroyBall(other.gameObject);
                 BrickHandler.rightBrickActive = false;
-                GameManager.instance.P1Scored();
+                GameManager.Instance.P1Scored();
                 BrickHandler.SpawnBrick();
             }
             else {
                 BallHandler.DestroyBall(other.gameObject);
                 BrickHandler.leftBrickActive = false;
-                GameManager.instance.P2Scored();
+                GameManager.Instance.P2Scored();
                 BrickHandler.SpawnBrick();
             }
         }

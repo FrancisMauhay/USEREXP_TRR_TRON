@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Ball : MonoBehaviour {
@@ -16,9 +14,8 @@ public class Ball : MonoBehaviour {
         initMoveSpeed = moveSpeed;
     }
 
-    private void Update()
-    {
-        //Debug.Log("Ball Velocity "+rb.velocity);
+    void Update() {
+        // Debug.Log("Ball Velocity "+rb.velocity);
     }
 
     void Launch() {
@@ -26,6 +23,8 @@ public class Ball : MonoBehaviour {
 
             if (!player2) rb.velocity = Vector2.left * moveSpeed;
             else          rb.velocity = Vector2.right * moveSpeed;
+
+            // SoundManager.Instance.Play();
         }
     }
     
@@ -38,6 +37,7 @@ public class Ball : MonoBehaviour {
 
             rb.velocity = newDirection * moveSpeed;
             moveSpeed++;
+            // SoundManager.Instance.Play();
         }
 
         // ball crashes at the brick
@@ -50,6 +50,7 @@ public class Ball : MonoBehaviour {
 
             // resets speed when it hits a wall
             moveSpeed = initMoveSpeed;
+            // SoundManager.Instance.Play();
         }
 
         // ball bounces off a wall
@@ -58,6 +59,7 @@ public class Ball : MonoBehaviour {
             Vector2 newDirection = new Vector2(rb.velocity.x, hitFactor.y).normalized;
 
             rb.velocity = newDirection * moveSpeed;
+            // SoundManager.Instance.Play();
         }
     }
     public Vector2 CalculateHitFactor(Vector2 ballPos, Vector2 paddlePos, Vector2 paddleSize) {
@@ -66,7 +68,6 @@ public class Ball : MonoBehaviour {
 
         return new Vector2(x, y);
     }
-
     public void ResetBall() { 
         transform.position = Vector2.zero;
         rb.velocity = Vector2.left;
