@@ -7,6 +7,12 @@ public class Brick : MonoBehaviour {
     [SerializeField] int currHP;
     [SerializeField] Material mat;
 
+    public bool P2Brick = false;
+
+    private int damage = 1;
+    private bool ShieldActive = false;
+    private bool DoubleActive = false;
+
     public BrickSpawner BrickHandler { get; set; }
 
     void Awake() {
@@ -29,11 +35,14 @@ public class Brick : MonoBehaviour {
     }
 
     public void HitWall() {
-        currHP--;
+        currHP -= damage;
 
-        if (currHP <= 0)
+        if (currHP <= 0) {
             BrickHandler.BrickDestroyed(gameObject);
-        
+        }
+        else {
+            GameManager.instance.AssignPowerUp(this);
+        }
         // Debug.LogWarning(gameObject.name + " has been hit");
     }
 
@@ -45,5 +54,37 @@ public class Brick : MonoBehaviour {
             case 3: mat.color = Color.green; break;
             default: break;
         }
+    }
+
+    public void ActivateShield() { 
+        if(!ShieldActive) {
+            ShieldActive = true;
+            damage = 0;
+            Debug.Log("Shield Activated");
+            StartCoroutine(ShieldDuration());
+        }
+    }
+
+    public void ActivateDouble() {
+        if (!DoubleActive) {
+            DoubleActive = true;
+            damage = 2;
+            Debug.Log("Double Damage Activated");
+            StartCoroutine(DoubleDuration());
+        }
+    }
+
+    IEnumerator ShieldDuration() {
+        yield return new WaitForSeconds(10);
+        ShieldActive = false;
+        damage = 1;
+        Debug.Log("Shield Deactivated");
+    }
+
+    IEnumerator DoubleDuration() {
+        yield return new WaitForSeconds(10);
+        DoubleActive = false;
+        damage = 1;
+        Debug.Log("Double Damage Over");
     }
 }

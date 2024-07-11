@@ -47,7 +47,6 @@ public class Ball : MonoBehaviour {
 
             rb.velocity = newDirection * moveSpeed;
             collision.gameObject.GetComponent<Brick>().HitWall();
-            GameManager.instance.PowerUpRoll();
 
             // resets speed when it hits a wall
             moveSpeed = initMoveSpeed;

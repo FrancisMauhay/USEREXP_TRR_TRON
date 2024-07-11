@@ -9,6 +9,9 @@ public class BrickSpawner : MonoBehaviour {
 
     public bool rightBrickActive, leftBrickActive;
 
+    private GameObject leftBrick;
+    private GameObject rightBrick;
+
     void Awake() {
         rightBrickActive = false;
         leftBrickActive = false;
@@ -22,18 +25,19 @@ public class BrickSpawner : MonoBehaviour {
             // Debug.Log("Right Brick is active");
             rightBrickActive = true;
 
-            GameObject brick = Instantiate(BrickPrefab) as GameObject;
-            brick.transform.position = new Vector2(9, 0);
-            brick.GetComponent<Renderer>().material = mat2;
+            rightBrick = Instantiate(BrickPrefab) as GameObject;
+            rightBrick.transform.position = new Vector2(9, 0);
+            rightBrick.GetComponent<Brick>().P2Brick = true;
+            rightBrick.GetComponent<Renderer>().material = mat2;
             // Debug.LogWarning("Spawned right brick");
         }
         if (!leftBrickActive) {
             // Debug.Log("Left Brick is Active");
             leftBrickActive = true;
 
-            GameObject brick = Instantiate(BrickPrefab) as GameObject;
-            brick.transform.position = new Vector2(-9, 0);
-            brick.GetComponent<Renderer>().material = mat1;
+            leftBrick = Instantiate(BrickPrefab) as GameObject;
+            leftBrick.transform.position = new Vector2(-9, 0);
+            leftBrick.GetComponent<Renderer>().material = mat1;
             // Debug.LogWarning("Spawned left brick");
         }
     }

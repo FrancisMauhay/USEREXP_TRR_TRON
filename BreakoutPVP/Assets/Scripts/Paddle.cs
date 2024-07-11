@@ -33,7 +33,6 @@ public class Paddle : MonoBehaviour
     void PlayerMove()
     {
         Vector2 direction = move.ReadValue<Vector2>();
-        Debug.Log("Direction: " + direction);
         Vector2 movement = new Vector2(0, direction.y * MovementSpeed * Time.deltaTime);
 
         transform.Translate(movement);
