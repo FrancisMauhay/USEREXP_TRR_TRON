@@ -29,8 +29,9 @@ public class BallSpawner : MonoBehaviour {
     public void CheckBallVelocity() {
         if (ballInstance != null) {
             Ball ball = ballInstance.GetComponent<Ball>();
-
-            if (ball != null && ball.rb.velocity.magnitude <= 0.1f) {
+            
+            if (ball != null &&  ball.rb.velocity.magnitude <= 0.1f ) 
+            {
                 defaultTimer -= Time.deltaTime;
 
                 if (defaultTimer <= 0) {

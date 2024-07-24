@@ -1,14 +1,23 @@
 using UnityEngine;
+using System;
+using System.Collections;
 
 public class Ball : MonoBehaviour {
 
     [SerializeField] float moveSpeed;
+    //[SerializeField] Paddle paddle; //need to find way to get the script of each player
+    [SerializeField] GameObject player1Prefab;
+    [SerializeField] GameObject player2Prefab;
+    [SerializeField] static float resetBoolTimer = 1f;
     public Rigidbody2D rb;
     float initMoveSpeed;
     bool player2 = false;
 
     void Start() {
         rb = GetComponent<Rigidbody2D>();
+        player1Prefab = GameObject.Find("P1");
+        player2Prefab = GameObject.Find("P2");
+     
         Launch();
 
         initMoveSpeed = moveSpeed;
@@ -16,6 +25,8 @@ public class Ball : MonoBehaviour {
 
     void Update() {
         // Debug.Log("Ball Velocity "+rb.velocity);
+        //player1Prefab.GetComponent<Paddle>().didBallHit = false;
+        //player2Prefab.GetComponent<Paddle>().didBallHit = false;
     }
 
     void Launch() {
@@ -34,9 +45,20 @@ public class Ball : MonoBehaviour {
         if (collision.gameObject.GetComponent<Paddle>() != null) {
             Vector2 hitFactor = CalculateHitFactor(transform.position, collision.transform.position, collision.collider.bounds.size);
             Vector2 newDirection = new Vector2(hitFactor.x, hitFactor.y).normalized;
-
             rb.velocity = newDirection * moveSpeed;
             moveSpeed++;
+
+            if (collision.gameObject.tag == "Player1")
+            {
+                player1Prefab.GetComponent<Paddle>().didBallHit = true;
+                StartCoroutine(player1Prefab.GetComponent<Paddle>().SwitchBoolean1(resetBoolTimer));
+            }
+            else if(collision.gameObject.tag == "Player2")
+            {
+                player2Prefab.GetComponent<Paddle>().didBallHitP2 = true;
+                StartCoroutine(player2Prefab.GetComponent<Paddle>().SwitchBoolean2(resetBoolTimer));
+            }
+
             // SoundManager.Instance.Play();
         }
 
@@ -72,4 +94,6 @@ public class Ball : MonoBehaviour {
         transform.position = Vector2.zero;
         rb.velocity = Vector2.left;
     }
+
+   
 }

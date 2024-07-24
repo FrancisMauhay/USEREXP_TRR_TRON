@@ -10,6 +10,10 @@ public class GameManager : MonoBehaviour {
 
     [SerializeField] int P1points = 0, P2points = 0;
     [SerializeField] TextMeshProUGUI P1Score, P2Score;
+    [SerializeField] GameObject pauseMenu;
+    [SerializeField] GameObject gameOverScreen;
+    [SerializeField] GameObject player1WinText;
+    [SerializeField] GameObject player2WinText;
 
     void Awake() {
         if (Instance == null) {
@@ -30,17 +34,20 @@ public class GameManager : MonoBehaviour {
 
         CheckPoints();
         PrintScore();
+        ActivePauseMenu();
     }
 
     void CheckPoints() {
         if (P1points >= 3) {
             Debug.Log("P1 WINS");
             BrickHandler.SpawnBrick();
+            DoGameOver();
             // SoundManager.Instance.Play();
         }
         if (P2points >= 3) {
             Debug.Log("P2 WINS");
             BrickHandler.SpawnBrick();
+            DoGameOver();
             // SoundManager.Instance.Play();
         }
     }
@@ -76,6 +83,50 @@ public class GameManager : MonoBehaviour {
                     break;
                 default: break;
             }
+        }
+    }
+
+    public void ActivePauseMenu()
+    {
+        if(Input.GetKey(KeyCode.Escape)) 
+        {
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0;
+        }
+    }
+
+    public void Resume()
+    {
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+    }
+
+    public void QuitMatch()
+    {
+    #if UNITY_STANDALONE
+        Application.Quit();
+    #endif
+    #if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+    #endif
+    }
+
+    public void Rematch()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public void DoGameOver()
+    {
+        gameOverScreen.SetActive(true);
+
+        if(P1points>= 3)
+        {
+            player1WinText.SetActive(true);
+        }
+        else if(P2points>= 3) 
+        { 
+            player2WinText.SetActive(true);
         }
     }
 }
