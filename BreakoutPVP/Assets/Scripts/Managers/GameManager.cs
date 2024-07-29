@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public enum PowerUpType { Shield = 1, Double = 2 }
@@ -8,12 +9,17 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance { get; private set; }
     public BrickSpawner BrickHandler { get; set; }
 
+    [Header("Score Variables")]
     [SerializeField] int P1points = 0, P2points = 0;
-    [SerializeField] TextMeshProUGUI P1Score, P2Score;
     [SerializeField] GameObject pauseMenu;
     [SerializeField] GameObject gameOverScreen;
-    [SerializeField] GameObject player1WinText;
-    [SerializeField] GameObject player2WinText;
+    [SerializeField] GameObject p1ScoreImage;
+    [SerializeField] GameObject p2ScoreImage;
+
+    [Header("ToDelete")]
+    [SerializeField] TextMeshProUGUI P1Score, P2Score;
+    [SerializeField] GameObject player1WinText; //Hidden until testing is done
+    [SerializeField] GameObject player2WinText; //Hidden until testing is done
 
     void Awake() {
         if (Instance == null) {
@@ -54,11 +60,13 @@ public class GameManager : MonoBehaviour {
 
     public void P1Scored() {
         P1points++;
+        p1ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P1points);
         Debug.Log("P1 Score: " + P1points);
         // SoundManager.Instance.Play();
     }
     public void P2Scored() {
         P2points++;
+        p2ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P2points);
         Debug.Log("P2 Score: " + P2points);
         // SoundManager.Instance.Play();
     }
