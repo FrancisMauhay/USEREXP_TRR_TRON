@@ -1,13 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenuManager : MonoBehaviour
-{
+public class StartMenuManager : MonoBehaviour {
 
-    public void QuitGame()
-    {
+    public void QuitGame() {
     #if UNITY_STANDALONE
         Application.Quit();
     #endif
@@ -16,8 +12,7 @@ public class StartMenuManager : MonoBehaviour
     #endif
     }
 
-    public void StartGame()
-    {
+    public void StartGame() {
         SceneManager.LoadScene("Cafeteria Showdown");
     }
 }

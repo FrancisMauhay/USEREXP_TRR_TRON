@@ -1,14 +1,12 @@
 using UnityEngine;
 using System;
 
-public enum SoundType { MISC, PLAYER, BGM };
-
 public class SoundManager : MonoBehaviour {
+
     public static SoundManager Instance;
 
-    [SerializeField] Sound[] misc, players, bgm;
-    [SerializeField] AudioSource soundSource;
-    
+    [SerializeField] Sound[] misc, game, bgm;
+    public AudioSource soundSource;
 
     void Awake() {
         if (Instance == null) {
@@ -17,16 +15,18 @@ public class SoundManager : MonoBehaviour {
         }
         else Destroy(gameObject);
     }
-    void Start() { 
-        Play("Theme", SoundType.BGM); 
+
+    void Start() {
+        Play("battle", 2);
     }
-    public void Play(string name, SoundType type) {
+
+    public void Play(string name, int mode) {
         Sound s = null;
 
-        switch (type) { // gets sfx/music spceific to the type
-            case SoundType.MISC:   s = Array.Find(misc, i => i.name == name);    break;
-            case SoundType.PLAYER: s = Array.Find(players, i => i.name == name); break;
-            case SoundType.BGM:    s = Array.Find(bgm, i => i.name == name);     break;
+        switch (mode) {
+            case 0: s = Array.Find(misc, i => i.name == name); break;
+            case 1: s = Array.Find(game, i => i.name == name); break;
+            case 2: s = Array.Find(bgm, i => i.name == name); break;
             default: break;
         }
 
@@ -42,10 +42,10 @@ public class SoundManager : MonoBehaviour {
     public void ToggleVolume(float v) { soundSource.volume = v; }
 }
 
-[System.Serializable] // makes it visible in the inspector
+[Serializable]
 public class Sound {
-    public AudioClip clip;
     public string name;
+    public AudioClip clip;
     public bool loop;
 
     [Range(0f, 1f)]

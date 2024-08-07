@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Brick : MonoBehaviour {
 
-    [SerializeField] int currHP;
+    public int currHP;
     [SerializeField] Material mat;
 
     public bool P2Brick = false;
@@ -24,7 +24,7 @@ public class Brick : MonoBehaviour {
         */
 
         if (P2Brick) gameObject.name = "Right Wall";
-        else gameObject.name = "Left Wall";
+        else         gameObject.name = "Left Wall";
 
         currHP = 3;
         mat.color = Color.green;
@@ -63,14 +63,14 @@ public class Brick : MonoBehaviour {
             default: break;
         }
 
-        Debug.LogWarning(name + "'s HP: " + currHP);
+        // Debug.LogWarning(name + "'s HP: " + currHP);
     }
 
     public void ActivateShield() { 
         if(!ShieldActive) {
             ShieldActive = true;
             damage = 0;
-            Debug.Log("Shield Activated");
+            // Debug.Log("Shield Activated");
             StartCoroutine(ShieldDuration());
             // SoundManager.Instance.Play();
         }
@@ -79,7 +79,7 @@ public class Brick : MonoBehaviour {
         if (!DoubleActive) {
             DoubleActive = true;
             damage = 2;
-            Debug.Log("Double Damage Activated");
+            // Debug.Log("Double Damage Activated");
             StartCoroutine(DoubleDuration());
             // SoundManager.Instance.Play();
         }
@@ -88,14 +88,14 @@ public class Brick : MonoBehaviour {
         yield return new WaitForSeconds(10);
         ShieldActive = false;
         damage = 1;
-        Debug.Log("Shield Deactivated");
+        // Debug.Log("Shield Deactivated");
         // SoundManager.Instance.Play();
     }
     IEnumerator DoubleDuration() {
         yield return new WaitForSeconds(10);
         DoubleActive = false;
         damage = 1;
-        Debug.Log("Double Damage Over");
+        // Debug.Log("Double Damage Over");
         // SoundManager.Instance.Play();
     }
 }

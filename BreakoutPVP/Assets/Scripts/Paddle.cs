@@ -41,18 +41,16 @@ public class Paddle : MonoBehaviour {
     void PlayerMove() {
         direction = move.ReadValue<Vector2>();
         movement = new Vector2(0, direction.y * MovementSpeed * Time.deltaTime);
-        Debug.Log(movement.magnitude);
+        // Debug.Log(movement.magnitude);
         transform.Translate(movement);
     }
 
-    public IEnumerator SwitchBoolean1(float resetTimer)
-    {
+    public IEnumerator SwitchBoolean1(float resetTimer) {
         yield return new WaitForSeconds(resetTimer);
         didBallHit = false;
     }
 
-    public IEnumerator SwitchBoolean2(float resetTimer)
-    {
+    public IEnumerator SwitchBoolean2(float resetTimer) {
         yield return new WaitForSeconds(resetTimer);
         didBallHitP2 = false;
     }
