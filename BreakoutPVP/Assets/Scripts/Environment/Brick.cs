@@ -4,7 +4,9 @@ using UnityEngine;
 public class Brick : MonoBehaviour {
 
     public int currHP;
-    [SerializeField] Material mat;
+    //[SerializeField] Material mat;
+    [SerializeField] SpriteRenderer tableSpriteRender;
+    [SerializeField] Sprite[] tableSprites;
 
     public bool P2Brick = false;
 
@@ -15,6 +17,7 @@ public class Brick : MonoBehaviour {
 
     void Awake() {
         BrickHandler = FindObjectOfType<BrickSpawner>();
+        
     }
 
     void Start()  {
@@ -27,11 +30,11 @@ public class Brick : MonoBehaviour {
         else         gameObject.name = "Left Wall";
 
         currHP = 3;
-        mat.color = Color.green;
+        //mat.color = Color.green;
     }
 
     void Update() {
-        test(); // for small HP values
+        //test(); // for small HP values
 
         /* actual color changer code (make sure the HP is set beforehand)
             if (currHP >= 10) mat.color = Color.green;
@@ -43,17 +46,24 @@ public class Brick : MonoBehaviour {
     public void HitWall() {
         currHP -= damage;
 
-        if (currHP <= 0) {
+        // Clamp the index to prevent array out of bounds
+        int spriteIndex = Mathf.Clamp(currHP - 1, 0, tableSprites.Length - 1);
+        tableSpriteRender.sprite = tableSprites[spriteIndex];
+
+        if (currHP <= 0) 
+        {
             BrickHandler.BrickDestroyed(gameObject);
             // SoundManager.Instance.Play();
         }
-        else {
+        else 
+        {
             GameManager.Instance.AssignPowerUp(this);
             // SoundManager.Instance.Play();
         }
         // Debug.LogWarning(gameObject.name + " has been hit");
     }
 
+    /*
     void test() {
         switch (currHP) {
             case 0: break;
@@ -65,6 +75,7 @@ public class Brick : MonoBehaviour {
 
         // Debug.LogWarning(name + "'s HP: " + currHP);
     }
+    */
 
     public void ActivateShield() { 
         if(!ShieldActive) {

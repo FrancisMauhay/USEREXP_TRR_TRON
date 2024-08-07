@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour {
     [Header("Score/Round Variables")]
     [SerializeField] int P1points = 0;
     [SerializeField] int P2points = 0;
-    [SerializeField] int currentRound = 1;
+    [SerializeField] int currentRound = 0;
     [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
     [SerializeField] GameObject roundImage;
 
@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour {
         if (Instance == null) {
             Instance = this;
             BrickHandler = FindObjectOfType<BrickSpawner>();
+
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
@@ -37,10 +38,11 @@ public class GameManager : MonoBehaviour {
 
     void Update() {
         if (Input.GetKeyDown(KeyCode.Backspace)) // basic restart code
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene("Cafeteria Showdown");
+
 
         CheckPoints();
-        PrintScore();
+        //PrintScore();
         ActivePauseMenu();
     }
 
@@ -62,16 +64,27 @@ public class GameManager : MonoBehaviour {
     public void P1Scored() {
         P1points++;
         p1ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P1points);
+        NextRoundText();
         Debug.Log("P1 Score: " + P1points);
     }
     public void P2Scored() {
         P2points++;
         p2ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P2points);
+        NextRoundText();
         Debug.Log("P2 Score: " + P2points);
     }
+
+    /*
     public void PrintScore() {
         P1Score.text = P1points.ToString();
         P2Score.text = P2points.ToString();
+    }
+    */
+
+    void NextRoundText()
+    {
+        currentRound++; //To increase round
+        roundImage.GetComponent<RoundManager>().UpdateRoundText(currentRound - 1);
     }
 
    
@@ -113,7 +126,7 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Rematch() {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("Cafeteria Showdown");
     }
 
     public void DoGameOver() {

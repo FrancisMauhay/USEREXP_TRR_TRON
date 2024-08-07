@@ -533,7 +533,10 @@ MonoBehaviour:
   - {fileID: 2672075006024695815, guid: 8c8f613519ec7764ca918c63ca8f53a8, type: 3}
   - {fileID: 2672075006024695815, guid: bd2f456785c050e4eb84c5fad86573bf, type: 3}
   - {fileID: 2672075006024695815, guid: 8ef7f5014012a944ea319ddc38fcae66, type: 3}
-  currentRoundSprite: {fileID: 2672075006024695815, guid: 8c8f613519ec7764ca918c63ca8f53a8, type: 3}
+  - {fileID: 2672075006024695815, guid: 6672be859eb8a3c448b3887301830d01, type: 3}
+  - {fileID: 2672075006024695815, guid: 90e2437f4bae43d47a118dc01aa3998d, type: 3}
+  - {fileID: 2672075006024695815, guid: 355d3b600cfe90b4c832fcec84492b99, type: 3}
+  roundImageToDisplay: {fileID: 284277932}
 --- !u!1 &418893899
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,11 +2058,11 @@ MonoBehaviour:
   gameOverScreen: {fileID: 1611194591}
   p1ScoreImage: {fileID: 1269945708}
   p2ScoreImage: {fileID: 1882146387}
-  roundImage: {fileID: 0}
+  roundImage: {fileID: 284277930}
   P1Score: {fileID: 1212342710}
   P2Score: {fileID: 1974400082}
-  player1WinText: {fileID: 0}
-  player2WinText: {fileID: 0}
+  player1WinText: {fileID: 114289182}
+  player2WinText: {fileID: 418893899}
 --- !u!4 &1404590335
 Transform:
   m_ObjectHideFlags: 0
@@ -3022,9 +3025,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e34a22d2e5c472479ce564711b2ec50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BrickPrefab: {fileID: 580856901499032430, guid: 211be64e154a3b743a1732c7d5b423ff, type: 3}
-  mat1: {fileID: 2100000, guid: 0505e5146c6b3134d8d711a6a61ef5e5, type: 2}
-  mat2: {fileID: 2100000, guid: 28a1801a5c472af48be5fb2017caa9f1, type: 2}
+  BrickPrefab: {fileID: 926190370470892665, guid: 4c2fd9b63dc75f84abbde4715e673ace, type: 3}
   rightBrickActive: 0
   leftBrickActive: 0
 --- !u!1 &1919316144
