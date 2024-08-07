@@ -138,7 +138,7 @@ MonoBehaviour:
   player1Prefab: {fileID: 0}
   player2Prefab: {fileID: 0}
   rb: {fileID: -3493305421066482545}
-  food: 0
+  food: 4
 --- !u!50 &-3493305421066482545
 Rigidbody2D:
   serializedVersion: 4

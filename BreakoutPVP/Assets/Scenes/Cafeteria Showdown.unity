@@ -529,8 +529,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08f9e26856677fd488a0c64ba6f1b486, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentRoundSpriteArray: []
-  currentRoundSprite: {fileID: 0}
+  currentRoundSpriteArray:
+  - {fileID: 2672075006024695815, guid: 8c8f613519ec7764ca918c63ca8f53a8, type: 3}
+  - {fileID: 2672075006024695815, guid: bd2f456785c050e4eb84c5fad86573bf, type: 3}
+  - {fileID: 2672075006024695815, guid: 8ef7f5014012a944ea319ddc38fcae66, type: 3}
+  currentRoundSprite: {fileID: 2672075006024695815, guid: 8c8f613519ec7764ca918c63ca8f53a8, type: 3}
 --- !u!1 &418893899
 GameObject:
   m_ObjectHideFlags: 0
@@ -1069,7 +1072,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 686110966}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8db70787658eb74b9f609d4d18b62f6, type: 3}
+  m_Script: {fileID: 11500000, guid: a175dcff89eb8d44196776cd14abe015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &743682877
@@ -2212,7 +2215,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1406801658}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8db70787658eb74b9f609d4d18b62f6, type: 3}
+  m_Script: {fileID: 11500000, guid: a175dcff89eb8d44196776cd14abe015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1412004282
@@ -3375,7 +3378,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eda198d2b4de29e4b976b69bc199e748, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ballPrefabs: {fileID: 2199844771657377778, guid: 4072b9638e224b94aa652d43e033d9b9, type: 3}
+  ballPrefabs:
+  - {fileID: 2199844771657377778, guid: 4072b9638e224b94aa652d43e033d9b9, type: 3}
+  - {fileID: 2199844771657377778, guid: 4394928eb78ed394faff13587916df2f, type: 3}
+  - {fileID: 2199844771657377778, guid: 8aa2009d7d0ff144d8404a2e8d9ea9df, type: 3}
 --- !u!1001 &1855491732490889584
 PrefabInstance:
   m_ObjectHideFlags: 0

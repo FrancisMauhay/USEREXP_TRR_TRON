@@ -71,26 +71,29 @@ public class Ball : MonoBehaviour {
             // resets speed when it hits a wall
             moveSpeed = initMoveSpeed;
 
-            switch (food) {
-                case Food.DONUT:   SoundManager.Instance.Play("donut hit", 0);   break;
-                case Food.EGG:     SoundManager.Instance.Play("egg hit", 0);     break;
-                case Food.PANCAKE: SoundManager.Instance.Play("pancake hit", 0); break;
-                case Food.PIZZA:   SoundManager.Instance.Play("pizza hit", 0);   break;
-                default:                                                         break;
+           
+            switch (collision.gameObject.GetComponent<Brick>().currHP)
+            {
+                case 0: SoundManager.Instance.Play("crack3", 0); break;
+                case 1: SoundManager.Instance.Play("crack2", 0); break;
+                case 2: SoundManager.Instance.Play("crack1", 0); break;
+                default: break;
             }
         }
 
         // ball bounces off a wall  
-        if (collision.gameObject.GetComponent<Brick>() != null) {
+        if (collision.gameObject.GetComponent<Wall>() != null) {
             Vector2 hitFactor = CalculateHitFactor(transform.position, collision.transform.position, collision.collider.bounds.size);
             Vector2 newDirection = new Vector2(rb.velocity.x, hitFactor.y).normalized;
 
             rb.velocity = newDirection * moveSpeed;
 
-            switch (collision.gameObject.GetComponent<Brick>().currHP) {
-                case 0: SoundManager.Instance.Play("crack3", 0); break;
-                case 1: SoundManager.Instance.Play("crack2", 0); break;
-                case 2: SoundManager.Instance.Play("crack1", 0); break;
+            switch (food)
+            {
+                case Food.DONUT: SoundManager.Instance.Play("donut hit", 0); break;
+                case Food.EGG: SoundManager.Instance.Play("egg hit", 0); break;
+                case Food.PANCAKE: SoundManager.Instance.Play("pancake hit", 0); break;
+                case Food.PIZZA: SoundManager.Instance.Play("pizza hit", 0); break;
                 default: break;
             }
         }
