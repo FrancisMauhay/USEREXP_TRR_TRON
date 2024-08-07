@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
+using UnityEngine.UI;
 
 public enum PowerUpType { Shield = 1, Double = 2 }
 
@@ -9,10 +10,12 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
     public BrickSpawner BrickHandler { get; set; }
 
-    [Header("Score Variables")]
+    [Header("Score/Round Variables")]
     [SerializeField] int P1points = 0;
     [SerializeField] int P2points = 0;
+    [SerializeField] int currentRound = 1;
     [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
+    [SerializeField] GameObject roundImage;
 
     [Header("ToDelete")]
     [SerializeField] TextMeshProUGUI P1Score;
@@ -71,6 +74,7 @@ public class GameManager : MonoBehaviour {
         P2Score.text = P2points.ToString();
     }
 
+   
     public void AssignPowerUp(Brick brick) {
         int powerUpDie = Random.Range(1, 3); // 1 or 2
         PowerUpType powerUpType = (PowerUpType)powerUpDie;

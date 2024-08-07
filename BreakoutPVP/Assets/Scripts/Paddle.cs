@@ -32,7 +32,7 @@ public class Paddle : MonoBehaviour {
 
     void Update() {
         animator.SetFloat("Speed", Mathf.Abs(movement.magnitude));
-        animator.SetBool("IsBallHit", didBallHit); //problem same Bool for 2 different instances
+        animator.SetBool("IsBallHit", didBallHit); 
         animator.SetBool("IsBallHitP2", didBallHitP2);
 
         PlayerMove();
