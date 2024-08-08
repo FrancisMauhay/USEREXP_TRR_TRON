@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using TMPro;
-using UnityEngine.UI;
 
 public enum PowerUpType { Shield = 1, Double = 2 }
 
@@ -10,17 +9,20 @@ public class GameManager : MonoBehaviour {
     public static GameManager Instance;
     public BrickSpawner BrickHandler { get; set; }
 
-    [Header("Score/Round Variables")]
-    [SerializeField] int P1points = 0;
-    [SerializeField] int P2points = 0;
+    [Header("Player Scores")]
     [SerializeField] int currentRound = 0;
-    [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
+    [SerializeField] int P1points = 0, P2points = 0;
+
+    [Header("UI Panels")]
     [SerializeField] GameObject roundImage;
+    [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
 
     [Header("ToDelete")]
     [SerializeField] TextMeshProUGUI P1Score;
     [SerializeField] TextMeshProUGUI P2Score;
     [SerializeField] GameObject player1WinText, player2WinText; // Hidden until testing is done
+
+    bool isPaused, canPause;
 
     void Awake() {
         if (Instance == null) {
@@ -34,16 +36,17 @@ public class GameManager : MonoBehaviour {
 
     void Start() {
         BrickHandler.SpawnBrick();
+        SoundManager.Instance.Play("battle", 2);
+
+        isPaused = false;
+        canPause = true;
     }
 
     void Update() {
-        if (Input.GetKeyDown(KeyCode.Backspace)) // basic restart code
-            SceneManager.LoadScene("Cafeteria Showdown");
-
-
         CheckPoints();
-        //PrintScore();
-        ActivePauseMenu();
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+            TogglePause();
     }
 
     void CheckPoints() {
@@ -60,7 +63,6 @@ public class GameManager : MonoBehaviour {
             SoundManager.Instance.Play("game win", 1);
         }
     }
-
     public void P1Scored() {
         P1points++;
         p1ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P1points);
@@ -81,13 +83,10 @@ public class GameManager : MonoBehaviour {
     }
     */
 
-    void NextRoundText()
-    {
+    void NextRoundText() {
         currentRound++; //To increase round
         roundImage.GetComponent<RoundManager>().UpdateRoundText(currentRound - 1);
     }
-
-   
     public void AssignPowerUp(Brick brick) {
         int powerUpDie = Random.Range(1, 3); // 1 or 2
         PowerUpType powerUpType = (PowerUpType)powerUpDie;
@@ -102,20 +101,30 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+    
+    public void TogglePause() {
+        if (!canPause) return;
 
-    public void ActivePauseMenu() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            pauseMenu.SetActive(true);
-            SoundManager.Instance.ToggleMute();
-            Time.timeScale = 0;
-        }
-    }
-    public void Resume() {
-        pauseMenu.SetActive(false);
+        isPaused = !isPaused;
+
+        if (isPaused) Time.timeScale = 0f;
+        else          Time.timeScale = 1f;
+
+        pauseMenu.SetActive(!pauseMenu.activeSelf);
         SoundManager.Instance.ToggleMute();
-        Time.timeScale = 1;
     }
 
+    public void Rematch() { SceneManager.LoadScene("Game Screen"); }
+    public void DoGameOver() {
+        gameOverScreen.SetActive(true);
+        canPause = false;
+
+        if      (P1points >= 3) player1WinText.SetActive(true);
+        else if (P2points >= 3) player2WinText.SetActive(true);
+
+        SoundManager.Instance.soundSource.Stop(); // stops bgm to play the win sfx
+        SoundManager.Instance.Play("game win", 1);
+    }
     public void QuitMatch() {
     #if UNITY_STANDALONE
         Application.Quit();
@@ -124,19 +133,4 @@ public class GameManager : MonoBehaviour {
         UnityEditor.EditorApplication.isPlaying = false;
     #endif
     }
-
-    public void Rematch() {
-        SceneManager.LoadScene("Cafeteria Showdown");
-    }
-
-    public void DoGameOver() {
-        gameOverScreen.SetActive(true);
-
-        if      (P1points >= 3) player1WinText.SetActive(true);
-        else if (P2points >= 3) player2WinText.SetActive(true);
-
-        SoundManager.Instance.soundSource.Stop();
-        SoundManager.Instance.Play("game win", 1);
-    }
 }
-

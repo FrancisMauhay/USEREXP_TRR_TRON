@@ -5,7 +5,7 @@ public class SoundManager : MonoBehaviour {
 
     public static SoundManager Instance;
 
-    [SerializeField] Sound[] misc, game, bgm;
+    public Sound[] misc, game, bgm;
     public AudioSource soundSource;
 
     void Awake() {
@@ -14,10 +14,6 @@ public class SoundManager : MonoBehaviour {
             DontDestroyOnLoad(gameObject);
         }
         else Destroy(gameObject);
-    }
-
-    void Start() {
-        Play("battle", 2);
     }
 
     public void Play(string name, int mode) {

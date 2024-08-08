@@ -5,7 +5,8 @@ public enum Food { DEFAULT, PIZZA, EGG, PANCAKE, DONUT }
 public class Ball : MonoBehaviour {
 
     [SerializeField] float moveSpeed;
-    //[SerializeField] Paddle paddle; //need to find way to get the script of each player
+
+    // [SerializeField] Paddle paddle; // need to find way to get the script of each player
     [SerializeField] GameObject player1Prefab;
     [SerializeField] GameObject player2Prefab;
     [SerializeField] static float resetBoolTimer = 1f;
@@ -19,16 +20,15 @@ public class Ball : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         player1Prefab = GameObject.Find("P1");
         player2Prefab = GameObject.Find("P2");
-     
-        Launch();
-
         initMoveSpeed = moveSpeed;
+
+        Launch();
     }
 
     void Update() {
         // Debug.Log("Ball Velocity "+rb.velocity);
-        //player1Prefab.GetComponent<Paddle>().didBallHit = false;
-        //player2Prefab.GetComponent<Paddle>().didBallHit = false;
+        // player1Prefab.GetComponent<Paddle>().didBallHit = false;
+        // player2Prefab.GetComponent<Paddle>().didBallHit = false;
     }
 
     void Launch() {
@@ -38,7 +38,21 @@ public class Ball : MonoBehaviour {
             else          rb.velocity = Vector2.right * moveSpeed;
         }
     }
-    
+
+    public Vector2 CalculateHitFactor(Vector2 ballPos, Vector2 paddlePos, Vector2 paddleSize) {
+        float x = (ballPos.x - paddlePos.x) / paddleSize.x;
+        float y = (ballPos.y - paddlePos.y) / paddleSize.y;
+
+        return new Vector2(x, y);
+    }
+    public void ResetBall() {
+        transform.position = Vector2.zero;
+
+        // 50/50 where the ball will go
+        if (Random.Range(0f, 1f) > 0.5f) rb.velocity = Vector2.left;
+        else rb.velocity = Vector2.right;
+    }
+
     void OnCollisionEnter2D (Collision2D collision) { 
         
         // ball hits paddle
@@ -60,7 +74,7 @@ public class Ball : MonoBehaviour {
             }
         }
 
-        // ball crashes at the brick
+        // ball hits brick
         if (collision.gameObject.GetComponent<Brick>() != null) { 
             Vector2 hitFactor = CalculateHitFactor(transform.position, collision.transform.position, collision.collider.bounds.size);
             Vector2 newDirection = new Vector2(hitFactor.x, hitFactor.y).normalized;
@@ -70,26 +84,17 @@ public class Ball : MonoBehaviour {
 
             // resets speed when it hits a wall
             moveSpeed = initMoveSpeed;
-
-           
-            switch (collision.gameObject.GetComponent<Brick>().currHP)
-            {
-                case 0: SoundManager.Instance.Play("crack3", 0); break;
-                case 1: SoundManager.Instance.Play("crack2", 0); break;
-                case 2: SoundManager.Instance.Play("crack1", 0); break;
-                default: break;
-            }
+            SoundManager.Instance.Play("crack3", 0);
         }
 
-        // ball bounces off a wall  
+        // ball hits top/bottom wall
         if (collision.gameObject.GetComponent<Wall>() != null) {
             Vector2 hitFactor = CalculateHitFactor(transform.position, collision.transform.position, collision.collider.bounds.size);
             Vector2 newDirection = new Vector2(rb.velocity.x, hitFactor.y).normalized;
 
             rb.velocity = newDirection * moveSpeed;
 
-            switch (food)
-            {
+            switch (food) {
                 case Food.DONUT: SoundManager.Instance.Play("donut hit", 0); break;
                 case Food.EGG: SoundManager.Instance.Play("egg hit", 0); break;
                 case Food.PANCAKE: SoundManager.Instance.Play("pancake hit", 0); break;
@@ -97,17 +102,5 @@ public class Ball : MonoBehaviour {
                 default: break;
             }
         }
-    }
-    public Vector2 CalculateHitFactor(Vector2 ballPos, Vector2 paddlePos, Vector2 paddleSize) {
-        float x = (ballPos.x - paddlePos.x) / paddleSize.x;
-        float y = (ballPos.y - paddlePos.y) / paddleSize.y;
-
-        return new Vector2(x, y);
-    }
-    public void ResetBall() { 
-        transform.position = Vector2.zero;
-
-        if (Random.Range(0f, 1f) > 0.5f) rb.velocity = Vector2.left;
-        else                             rb.velocity = Vector2.right;
     }
 }

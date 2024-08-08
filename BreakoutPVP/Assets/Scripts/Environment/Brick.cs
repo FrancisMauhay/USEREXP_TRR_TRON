@@ -4,7 +4,7 @@ using UnityEngine;
 public class Brick : MonoBehaviour {
 
     public int currHP;
-    //[SerializeField] Material mat;
+
     [SerializeField] SpriteRenderer tableSpriteRender;
     [SerializeField] Sprite[] tableSprites;
 
@@ -83,7 +83,6 @@ public class Brick : MonoBehaviour {
             damage = 0;
             // Debug.Log("Shield Activated");
             StartCoroutine(ShieldDuration());
-            // SoundManager.Instance.Play();
         }
     }
     public void ActivateDouble() {
@@ -92,7 +91,6 @@ public class Brick : MonoBehaviour {
             damage = 2;
             // Debug.Log("Double Damage Activated");
             StartCoroutine(DoubleDuration());
-            // SoundManager.Instance.Play();
         }
     }
     IEnumerator ShieldDuration() {
@@ -100,13 +98,11 @@ public class Brick : MonoBehaviour {
         ShieldActive = false;
         damage = 1;
         // Debug.Log("Shield Deactivated");
-        // SoundManager.Instance.Play();
     }
     IEnumerator DoubleDuration() {
         yield return new WaitForSeconds(10);
         DoubleActive = false;
         damage = 1;
         // Debug.Log("Double Damage Over");
-        // SoundManager.Instance.Play();
     }
 }

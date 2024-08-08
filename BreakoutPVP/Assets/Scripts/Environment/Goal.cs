@@ -17,14 +17,18 @@ public class Goal : MonoBehaviour {
             if (player2 == true) {
                 BallHandler.DestroyBall(other.gameObject);
                 BrickHandler.rightBrickActive = false;
-                GameManager.Instance.P1Scored();
                 BrickHandler.SpawnBrick();
+                
+                GameManager.Instance.P1Scored();
+                SoundManager.Instance.Play("death2", 1);
             }
             else {
                 BallHandler.DestroyBall(other.gameObject);
                 BrickHandler.leftBrickActive = false;
-                GameManager.Instance.P2Scored();
                 BrickHandler.SpawnBrick();
+
+                GameManager.Instance.P2Scored();
+                SoundManager.Instance.Play("death1", 1);
             }
         }
     }
