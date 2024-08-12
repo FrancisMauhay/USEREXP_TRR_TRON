@@ -17,11 +17,6 @@ public class GameManager : MonoBehaviour {
     [SerializeField] GameObject roundImage;
     [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
 
-    [Header("PowerUps")]
-    [SerializeField] GameObject shieldIconP1; // 0 for P1, 1 for P2
-    [SerializeField] GameObject doubleDmgIconP1; // 0 for P1, 1 for P2
-    [SerializeField] GameObject shieldIconP2; // 0 for P1, 1 for P2
-    [SerializeField] GameObject doubleDmgIconP2; // 0 for P1, 1 for P2
 
     [Header("ToDelete")]
     //[SerializeField] GameObject player1WinText, player2WinText; // Hidden until testing is done
@@ -109,53 +104,24 @@ public class GameManager : MonoBehaviour {
         roundImage.GetComponent<RoundManager>().UpdateRoundText(currentRound - 1);
     }
 
-    public void AssignPowerUp(Brick brick) {
+    public void AssignPowerUp(Brick brick) 
+    {
         int powerUpDie = Random.Range(1, 3); // 1 or 2
         PowerUpType powerUpType = (PowerUpType)powerUpDie;
        
         if (brick != null) {
             SoundManager.Instance.Play("collect skill", 0);
             switch (powerUpType) {
-               
                 case PowerUpType.Shield: brick.ActivateShield();
                     Debug.Log("ShieldON");
                     break;
                 case PowerUpType.Double: brick.ActivateDouble();
                     Debug.Log("DmgON"); 
                     break;
-                default: break;
+                default:
+                    Debug.Log("Unexpected powerUpType: " + powerUpType);
+                    break;
             }
-        }
-    }
-
-    public void TurnActivePowerUpIcon(Brick brick)
-    {
-        if(brick.P2Brick == true && brick.ShieldActive == true) 
-        { 
-            shieldIconP2.SetActive(true);
-        }
-        else if(brick.P2Brick == false && brick.ShieldActive == true) 
-        {
-            shieldIconP1.SetActive(true);
-        }
-        else
-        {
-            shieldIconP1.SetActive(false);
-            shieldIconP2.SetActive(false);
-        }
-
-        if (brick.P2Brick == true && brick.DoubleActive == true)
-        {
-            doubleDmgIconP2.SetActive(true);
-        }
-        else if (brick.P2Brick == false && brick.DoubleActive == true)
-        {
-            doubleDmgIconP1.SetActive(true);
-        }
-        else
-        {
-            doubleDmgIconP1.SetActive(false);
-            doubleDmgIconP2.SetActive(false);
         }
     }
     

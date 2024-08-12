@@ -10,6 +10,7 @@ public class Brick : MonoBehaviour {
     [SerializeField] SpriteRenderer tableSpriteRender;
     [SerializeField] Sprite[] tableSprites;
     [SerializeField] GameObject shieldOverlay;
+    [SerializeField] GameObject dmgIcon;
 
     public bool P2Brick = false;
 
@@ -32,6 +33,8 @@ public class Brick : MonoBehaviour {
         if (P2Brick) gameObject.name = "Right Wall";
         else         gameObject.name = "Left Wall";
 
+       
+
         currHP = 3;
         //mat.color = Color.green;
     }
@@ -44,7 +47,6 @@ public class Brick : MonoBehaviour {
             else if (currHP >= 5) mat.color = Color.yellow;
             else mat.color = Color.red;
         */
-        GameManager.Instance.TurnActivePowerUpIcon(this);
     }
 
     public void HitWall() {
@@ -62,6 +64,7 @@ public class Brick : MonoBehaviour {
         else 
         {
             GameManager.Instance.AssignPowerUp(this);
+            //Debug.Log("ROLL DICE");
             // SoundManager.Instance.Play();
         }
         // Debug.LogWarning(gameObject.name + " has been hit");
@@ -81,8 +84,6 @@ public class Brick : MonoBehaviour {
     }
     */
 
-  
-
     public void ActivateShield() { 
         if(!ShieldActive) {
             ShieldActive = true;
@@ -96,20 +97,22 @@ public class Brick : MonoBehaviour {
         if (!DoubleActive) {
             DoubleActive = true;
             damage = 2;
+            dmgIcon.SetActive(true);
             Debug.Log("Double Damage Activated");
             StartCoroutine(DoubleDuration());
         }
     }
     IEnumerator ShieldDuration() {
         yield return new WaitForSeconds(10);
-        shieldOverlay.SetActive(false);
         ShieldActive = false;
+        shieldOverlay.SetActive(false); ;
         damage = 1;
         // Debug.Log("Shield Deactivated");
     }
     IEnumerator DoubleDuration() {
         yield return new WaitForSeconds(10);
         DoubleActive = false;
+        dmgIcon.SetActive(false);
         damage = 1;
         // Debug.Log("Double Damage Over");
     }

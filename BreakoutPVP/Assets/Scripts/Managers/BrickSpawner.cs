@@ -23,7 +23,7 @@ public class BrickSpawner : MonoBehaviour {
             rightBrickActive = true;
 
             rightBrick = Instantiate(BrickPrefab) as GameObject;
-            rightBrick.transform.position = new Vector2(8.46f, -0.78f);
+            rightBrick.transform.position = new Vector2(8.22f, -0.78f);
             rightBrick.GetComponent<Brick>().P2Brick = true;
             //rightBrick.GetComponent<Renderer>().material = mat2;
             // Debug.LogWarning("Spawned right brick");
@@ -32,7 +32,7 @@ public class BrickSpawner : MonoBehaviour {
             leftBrickActive = true;
 
             leftBrick = Instantiate(BrickPrefab) as GameObject;
-            leftBrick.transform.position = new Vector2(-8.46f, -0.78f);
+            leftBrick.transform.position = new Vector2(-8.22f, -0.78f);
             //leftBrick.GetComponent<Renderer>().material = mat1;
             // Debug.LogWarning("Spawned left brick");
         }
