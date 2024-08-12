@@ -34,7 +34,7 @@ public class Paddle : MonoBehaviour {
         animator.SetFloat("Speed", Mathf.Abs(movement.magnitude));
         animator.SetBool("IsBallHit", didBallHit); 
         animator.SetBool("IsBallHitP2", didBallHitP2);
-
+        
         PlayerMove();
     }
 
