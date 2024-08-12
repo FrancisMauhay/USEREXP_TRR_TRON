@@ -13,7 +13,7 @@ public class BrickSpawner : MonoBehaviour {
     void Awake() {
         rightBrickActive = false;
         leftBrickActive = false;
-        SpawnBrick();
+        //SpawnBrick();
         //mat1.color = Color.green; // left brick
         //mat2.color = Color.green; // right brick
     }

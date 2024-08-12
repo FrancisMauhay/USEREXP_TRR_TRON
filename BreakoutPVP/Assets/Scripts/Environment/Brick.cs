@@ -1,23 +1,26 @@
 using System.Collections;
+using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
 
 public class Brick : MonoBehaviour {
 
     public int currHP;
 
+    [Header("Table Properties")]
     [SerializeField] SpriteRenderer tableSpriteRender;
     [SerializeField] Sprite[] tableSprites;
+    [SerializeField] GameObject shieldOverlay;
 
     public bool P2Brick = false;
 
     int damage = 1;
-    bool ShieldActive = false, DoubleActive = false;
+    public bool ShieldActive = false, DoubleActive = false;
 
     public BrickSpawner BrickHandler { get; set; }
 
     void Awake() {
         BrickHandler = FindObjectOfType<BrickSpawner>();
-        
+
     }
 
     void Start()  {
@@ -41,6 +44,7 @@ public class Brick : MonoBehaviour {
             else if (currHP >= 5) mat.color = Color.yellow;
             else mat.color = Color.red;
         */
+        GameManager.Instance.TurnActivePowerUpIcon(this);
     }
 
     public void HitWall() {
@@ -77,11 +81,14 @@ public class Brick : MonoBehaviour {
     }
     */
 
+  
+
     public void ActivateShield() { 
         if(!ShieldActive) {
             ShieldActive = true;
+            shieldOverlay.SetActive(true);
             damage = 0;
-            // Debug.Log("Shield Activated");
+            Debug.Log("Shield Activated");
             StartCoroutine(ShieldDuration());
         }
     }
@@ -89,12 +96,13 @@ public class Brick : MonoBehaviour {
         if (!DoubleActive) {
             DoubleActive = true;
             damage = 2;
-            // Debug.Log("Double Damage Activated");
+            Debug.Log("Double Damage Activated");
             StartCoroutine(DoubleDuration());
         }
     }
     IEnumerator ShieldDuration() {
         yield return new WaitForSeconds(10);
+        shieldOverlay.SetActive(false);
         ShieldActive = false;
         damage = 1;
         // Debug.Log("Shield Deactivated");

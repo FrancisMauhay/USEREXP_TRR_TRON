@@ -17,13 +17,30 @@ public class GameManager : MonoBehaviour {
     [SerializeField] GameObject roundImage;
     [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
 
+    [Header("PowerUps")]
+    [SerializeField] GameObject shieldIconP1; // 0 for P1, 1 for P2
+    [SerializeField] GameObject doubleDmgIconP1; // 0 for P1, 1 for P2
+    [SerializeField] GameObject shieldIconP2; // 0 for P1, 1 for P2
+    [SerializeField] GameObject doubleDmgIconP2; // 0 for P1, 1 for P2
+
     [Header("ToDelete")]
-    [SerializeField] TextMeshProUGUI P1Score;
-    [SerializeField] TextMeshProUGUI P2Score;
-    [SerializeField] GameObject player1WinText, player2WinText; // Hidden until testing is done
+    //[SerializeField] GameObject player1WinText, player2WinText; // Hidden until testing is done
+
 
     bool isPaused, canPause;
 
+    private void Awake()
+    {
+        Instance = this;
+        BrickHandler = FindObjectOfType<BrickSpawner>();
+    }
+
+    private void OnDestroy()
+    {
+        Instance = null;
+    }
+
+    /*
     void Awake() {
         if (Instance == null) {
             Instance = this;
@@ -33,6 +50,8 @@ public class GameManager : MonoBehaviour {
         }
         else Destroy(gameObject);
     }
+    */
+    
 
     void Start() {
         BrickHandler.SpawnBrick();
@@ -44,6 +63,8 @@ public class GameManager : MonoBehaviour {
 
     void Update() {
         CheckPoints();
+        if (Input.GetKeyDown(KeyCode.Backspace)) // basic restart code
+            SceneManager.LoadScene("Game Screen");
 
         if (Input.GetKeyDown(KeyCode.Escape))
             TogglePause();
@@ -87,18 +108,54 @@ public class GameManager : MonoBehaviour {
         currentRound++; //To increase round
         roundImage.GetComponent<RoundManager>().UpdateRoundText(currentRound - 1);
     }
+
     public void AssignPowerUp(Brick brick) {
         int powerUpDie = Random.Range(1, 3); // 1 or 2
         PowerUpType powerUpType = (PowerUpType)powerUpDie;
-
+       
         if (brick != null) {
             SoundManager.Instance.Play("collect skill", 0);
-
             switch (powerUpType) {
-                case PowerUpType.Shield: brick.ActivateShield(); break;
-                case PowerUpType.Double: brick.ActivateDouble(); break;
+               
+                case PowerUpType.Shield: brick.ActivateShield();
+                    Debug.Log("ShieldON");
+                    break;
+                case PowerUpType.Double: brick.ActivateDouble();
+                    Debug.Log("DmgON"); 
+                    break;
                 default: break;
             }
+        }
+    }
+
+    public void TurnActivePowerUpIcon(Brick brick)
+    {
+        if(brick.P2Brick == true && brick.ShieldActive == true) 
+        { 
+            shieldIconP2.SetActive(true);
+        }
+        else if(brick.P2Brick == false && brick.ShieldActive == true) 
+        {
+            shieldIconP1.SetActive(true);
+        }
+        else
+        {
+            shieldIconP1.SetActive(false);
+            shieldIconP2.SetActive(false);
+        }
+
+        if (brick.P2Brick == true && brick.DoubleActive == true)
+        {
+            doubleDmgIconP2.SetActive(true);
+        }
+        else if (brick.P2Brick == false && brick.DoubleActive == true)
+        {
+            doubleDmgIconP1.SetActive(true);
+        }
+        else
+        {
+            doubleDmgIconP1.SetActive(false);
+            doubleDmgIconP2.SetActive(false);
         }
     }
     
@@ -114,13 +171,27 @@ public class GameManager : MonoBehaviour {
         SoundManager.Instance.ToggleMute();
     }
 
-    public void Rematch() { SceneManager.LoadScene("Game Screen"); }
+    public void Rematch() 
+    { 
+        SceneManager.LoadScene("Game Screen"); 
+        Time.timeScale = 1f; 
+    }
+
     public void DoGameOver() {
         gameOverScreen.SetActive(true);
+        Time.timeScale = 0f;
         canPause = false;
 
-        if      (P1points >= 3) player1WinText.SetActive(true);
-        else if (P2points >= 3) player2WinText.SetActive(true);
+        if (P1points >= 3)
+        {
+            p1ScoreImage.SetActive(true);
+            p2ScoreImage.SetActive(false);
+        }
+        else if (P2points >= 3)
+        {
+            p1ScoreImage.SetActive(false);
+            p2ScoreImage.SetActive(true); 
+        }
 
         SoundManager.Instance.soundSource.Stop(); // stops bgm to play the win sfx
         SoundManager.Instance.Play("game win", 1);
