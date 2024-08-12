@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
 
     [Header("UI Panels")]
     [SerializeField] GameObject roundImage;
-    [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
+    [SerializeField] GameObject pauseMenu, gameOverScreen, p1WinImage, p2WinImage;
 
 
     [Header("ToDelete")]
@@ -81,13 +81,13 @@ public class GameManager : MonoBehaviour {
     }
     public void P1Scored() {
         P1points++;
-        p1ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P1points);
+        p1WinImage.GetComponent<ScoreManager>().UpdateScoreText(P1points);
         NextRoundText();
         Debug.Log("P1 Score: " + P1points);
     }
     public void P2Scored() {
         P2points++;
-        p2ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P2points);
+        p2WinImage.GetComponent<ScoreManager>().UpdateScoreText(P2points);
         NextRoundText();
         Debug.Log("P2 Score: " + P2points);
     }
@@ -150,13 +150,13 @@ public class GameManager : MonoBehaviour {
 
         if (P1points >= 3)
         {
-            p1ScoreImage.SetActive(true);
-            p2ScoreImage.SetActive(false);
+            p1WinImage.SetActive(true);
+            p2WinImage.SetActive(false);
         }
         else if (P2points >= 3)
         {
-            p1ScoreImage.SetActive(false);
-            p2ScoreImage.SetActive(true); 
+            p1WinImage.SetActive(false);
+            p2WinImage.SetActive(true); 
         }
 
         SoundManager.Instance.soundSource.Stop(); // stops bgm to play the win sfx
