@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour {
 
     [Header("UI Panels")]
     [SerializeField] GameObject roundImage;
-    [SerializeField] GameObject pauseMenu, gameOverScreen, p1WinImage, p2WinImage;
+    [SerializeField] GameObject pauseMenu, gameOverScreen, p1ScoreImage, p2ScoreImage;
+    [SerializeField] GameObject p1WinImage, p2WinImage;
 
 
     [Header("ToDelete")]
@@ -49,6 +50,7 @@ public class GameManager : MonoBehaviour {
     
 
     void Start() {
+        Time.timeScale = 1.0f;
         BrickHandler.SpawnBrick();
         SoundManager.Instance.Play("battle", 2);
 
@@ -81,13 +83,13 @@ public class GameManager : MonoBehaviour {
     }
     public void P1Scored() {
         P1points++;
-        p1WinImage.GetComponent<ScoreManager>().UpdateScoreText(P1points);
+        p1ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P1points);
         NextRoundText();
         Debug.Log("P1 Score: " + P1points);
     }
     public void P2Scored() {
         P2points++;
-        p2WinImage.GetComponent<ScoreManager>().UpdateScoreText(P2points);
+        p2ScoreImage.GetComponent<ScoreManager>().UpdateScoreText(P2points);
         NextRoundText();
         Debug.Log("P2 Score: " + P2points);
     }
@@ -138,14 +140,13 @@ public class GameManager : MonoBehaviour {
     }
 
     public void Rematch() 
-    { 
+    {
+        Time.timeScale = 1f;
         SceneManager.LoadScene("Game Screen"); 
-        Time.timeScale = 1f; 
     }
 
     public void DoGameOver() {
         gameOverScreen.SetActive(true);
-        Time.timeScale = 0f;
         canPause = false;
 
         if (P1points >= 3)
@@ -161,6 +162,7 @@ public class GameManager : MonoBehaviour {
 
         SoundManager.Instance.soundSource.Stop(); // stops bgm to play the win sfx
         SoundManager.Instance.Play("game win", 1);
+        Time.timeScale = 0f;
     }
     public void QuitMatch() {
     #if UNITY_STANDALONE

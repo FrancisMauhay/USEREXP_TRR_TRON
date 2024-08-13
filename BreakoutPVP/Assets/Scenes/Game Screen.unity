@@ -2317,6 +2317,8 @@ MonoBehaviour:
   roundImage: {fileID: 284277930}
   pauseMenu: {fileID: 1552825276}
   gameOverScreen: {fileID: 1611194591}
+  p1ScoreImage: {fileID: 1269945708}
+  p2ScoreImage: {fileID: 1882146387}
   p1WinImage: {fileID: 114289182}
   p2WinImage: {fileID: 418893899}
 --- !u!4 &1404590335
